@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp-like Chat Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: #e5ddd5;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 300px;
+            background-color: #ffffff;
+            border-right: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+        }
+        .contact {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .contact:hover {
+            background-color: #f0f0f0;
+        }
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background-color: #075e54;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #ffffff;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 70%;
+            position: relative;
+        }
+        .message.user {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .message.bot {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+            margin-right: auto;
+        }
+        .input-container {
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            display: flex;
+        }
+        .input-container input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            margin-right: 10px;
+            transition: border-color 0.3s;
+        }
+        .input-container input:focus {
+            border-color: #075e54;
+            outline: none;
+        }
+        .input-container button {
+            padding: 10px 15px;
+            background-color: #075e54;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .input-container button:hover {
+            background-color: #054f4b;
+        }
+        @media (max-width: 600px) {
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="contact">Alice</div>
+    <div class="contact">Bob</div>
+    <div class="contact">Charlie</div>
+    <div class="contact">David</div>
+</div>
+
+<div class="chat-container">
+    <div class="chat-header">Chat with Alice</div>
+    <div class="messages" id="messages"></div>
+    <div class="input-container">
+        <input type="text" id="messageInput" placeholder="Type a message..." />
+        <button id="sendButton">Send</button>
+    </div>
+</div>
+
+<script>
+    const messagesDiv = document.getElementById('messages');
+    const messageInput = document.getElementById('messageInput');
+    const sendButton = document.getElementById('sendButton');
+
+    sendButton.addEventListener('click', () => {
+        const messageText = messageInput.value.trim();
+        if (messageText) {
+            // Create user message
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user');
+            userMessage.textContent = messageText;
+            messagesDiv.appendChild(userMessage);
+
+            // Clear input
+            messageInput.value = '';
+
+            // Simulate bot response
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'bot');
+                botMessage.textContent = 'Bot: ' + messageText; // Simple echo bot
+                messagesDiv.appendChild(botMessage);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to the bottom
+            }, 1000);
+        }
+    });
+
+    // Allow sending messages with Enter key
+    messageInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            sendButton.click();
+        }
+    });
+</script>
+
+</body>
+</html>

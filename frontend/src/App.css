@@ -1,0 +1,82 @@
+/* frontend/src/App.css */
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 300px;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.contact {
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contact:hover {
+  background-color: #f0f0f0;
+}
+
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.chat-header {
+  background-color: #075e54;
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  margin: 10px 0;
+}
+
+.message {
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 70%;
+}
+
+.message.user {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.message.bot {
+  background-color: #f1f1f1;
+  align-self: flex-start;
+}
+
+.input-container {
+  display: flex;
+}
+
+.input-container input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.input-container button {
+  padding: 10px 15px;
+  background-color: #075e54;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
