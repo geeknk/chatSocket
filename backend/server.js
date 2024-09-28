@@ -6,6 +6,9 @@ const connectDB = require('./database/db'); // Import the DB connection
 const Message = require('./models/Message'); // Import the Message model
 const Contact = require('./models/Contact'); // Import the Contact model
 const dotenv = require('dotenv');
+const contactRouter = require('./route/contact.route')
+const messageRouter = require('./route/message.route')
+const userRouter = require('./route/user.route')
 
 dotenv.config();
 
@@ -24,26 +27,10 @@ app.use(express.json());
 // Connect to MongoDB
 connectDB();
 
-app.get('/api/contacts', async (req, res) => {
-    try {
-        const contacts = await Contact.find();
-        res.json(contacts);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
+app.use('/api',contactRouter)
+app.use('/api',messageRouter)
+app.use('/user',userRouter)
 
-app.post('/api/messages', async (req, res) => {
-    const { text, sender, receiver } = req.body;
-    const newMessage = new Message({ text, sender, receiver });
-
-    try {
-        await newMessage.save();
-        res.json(newMessage);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
 
 io.on('connection', (socket) => {
     console.log('New user connected');

@@ -8,8 +8,19 @@ const socket = io('http://localhost:4000');
 const Chat = ({ selectedContact }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+    const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
+
+        // Fetch current user from backend
+        const fetchCurrentUser = async () => {
+            const response = await fetch('http://localhost:4000/api/currentUser');
+            const user = await response.json();
+            setCurrentUser(user);
+        };
+
+        fetchCurrentUser();
+
         socket.on('receiveMessage', (message) => {
             setMessages((prevMessages) => [...prevMessages, message]);
         });
@@ -21,7 +32,7 @@ const Chat = ({ selectedContact }) => {
 
     const sendMessage = async () => {
         if (input) {
-            const message = { text: input, sender: 'Me', receiver: selectedContact };
+            const message = { text: input, sender: currentUser.name, receiver: selectedContact };
 
             // Emit the message to the server
             socket.emit('sendMessage', message);
